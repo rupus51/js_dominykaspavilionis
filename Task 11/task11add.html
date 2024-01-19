@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task11add</title>
+    <!-- <script defer src="task11.js"></script> -->
+  </head>
+  <body>
+    <button
+      class="view-skills-btn"
+      onclick="window.location.href='task11.html'"
+    >
+      View Skills
+    </button>
+    <form id="skillsForm" class="skills-form">
+      <label for="skills">Add Skill:</label>
+      <input type="text" id="skills" class="skills-input" />
+      <button type="submit" class="submit-btn">Submit</button>
+    </form>
+    <div id="userSkills"></div>
+    <script>
+      const skillsForm = document.getElementById("skillsForm");
+      const skillsInput = document.getElementById("skills");
+      const userSkills = document.getElementById("userSkills");
+
+      skillsForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        let userskillsValue = skillsInput.value;
+
+        await createSkill(userskillsValue);
+      });
+
+      const createSkill = async (userSkillsValue) => {
+        const body = {
+          userskills: userSkillsValue,
+        };
+        try {
+          const response = await fetch(
+            "https://testapi.io/api/rupus51/resource/skills",
+            {
+              method: "POST",
+              body: JSON.stringify(body),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          const userSkillsData = await response.json(); // Changed variable name
+          alert("Success");
+          console.log(userSkillsData);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+    </script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+
+      .view-skills-btn,
+      .submit-btn {
+        background-color: #4285f4;
+        color: #fff;
+        padding: 10px 20px;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-bottom: 10px;
+      }
+
+      .view-skills-btn:hover,
+      .submit-btn:hover {
+        background-color: #3367d6;
+      }
+
+      .skills-form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      label {
+        margin-bottom: 5px;
+      }
+
+      .skills-input {
+        padding: 8px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </body>
+</html>
